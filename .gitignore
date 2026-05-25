@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+coverage/
+*.tgz
+
+# Environment — keep the example, ignore real env files
+.env*
+!.env.example
+
+# Local databases, WAL/SHM, and any snapshot/export — runtime telemetry, never commit
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+exports/
+
+# Server- and build-generated artifacts
+rules-enforcement.json
+enforce-config.json
+rules.json
+
+# Images and screenshots — keep them out of the repository
+*.png
+*.jpg
+*.jpeg
+*.gif
+.screenshots/
+screenshots/
+
+# OS / editor noise
+.DS_Store
+*.log
