@@ -85,7 +85,7 @@
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "express-rate-limit": "^8.5.2",
-    "helmet": "^8.1.0",
+    "helmet": "^8.3.0",
     "ipaddr.js": "^2.4.0",
     "lucide-react": "^1.17.0",
     "mermaid": "^11.15.0",

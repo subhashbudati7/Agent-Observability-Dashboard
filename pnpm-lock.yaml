@@ -54,8 +54,8 @@ importers:
         specifier: ^8.5.2
         version: 8.5.2(express@4.22.2)
       helmet:
-        specifier: ^8.1.0
-        version: 8.2.0
+        specifier: ^8.3.0
+        version: 8.3.0
       ipaddr.js:
         specifier: ^2.4.0
         version: 2.4.0
@@ -1531,8 +1531,8 @@ packages:
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
 
-  helmet@8.2.0:
-    resolution: {integrity: sha512-DRgTIUgnWcJ62KyarxxziuqYxKGnR6Rgg19BlbucN/dpmJbl1XOit6qvoOX0ZT+HhWe5OUVhU/a1zpGyc1xA0Q==}
+  helmet@8.3.0:
+    resolution: {integrity: sha512-Qgpiaws3Sm30Av8Eah6sjMCZZwjlBu+E68rhpCWBshY1lb09HtLwj5GviX0OyQIn+ulUS0iX0AxN5n3tLZzz1w==}
     engines: {node: '>=18.0.0'}
 
   http-errors@2.0.1:
@@ -3893,7 +3893,7 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  helmet@8.2.0: {}
+  helmet@8.3.0: {}
 
   http-errors@2.0.1:
     dependencies:
