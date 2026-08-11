@@ -113,6 +113,6 @@
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.3.0",
-    "typescript": "~5.8.2"
+    "typescript": "~7.0.2"
   }
 }
