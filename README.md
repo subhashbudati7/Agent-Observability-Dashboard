@@ -430,6 +430,3 @@ Commercial licensing and dual-licensing options are documented in [`.github/LICE
 
 ---
 
-## Authors
-
-[withkarann](https://github.com/withkarann) and [aanjaneyasinghdhoni](https://github.com/aanjaneyasinghdhoni) — copyright The ClaudeSec Authors.
