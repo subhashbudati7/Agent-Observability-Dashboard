@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Observability Dashboard</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 2rem; background: #0f1115; color: #e8eaf0; }
+  h1 { font-size: 1.4rem; }
+  .cards { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+  .card { background: #1a1e27; border-radius: 8px; padding: 1rem 1.25rem; min-width: 140px; }
+  .card .v { font-size: 1.5rem; font-weight: 700; }
+  .card .k { font-size: 0.75rem; color: #9aa0b4; text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #2a2f3d; }
+  th { color: #9aa0b4; font-weight: 600; }
+  .err { color: #ff7a7a; }
+  button { background: #2f6fed; color: white; border: none; border-radius: 6px; padding: 0.5rem 1rem; cursor: pointer; }
+  button:hover { background: #255fd6; }
+  .muted { color: #9aa0b4; }
+</style>
+</head>
+<body>
+<h1>Agent Observability Dashboard</h1>
+<button onclick="load()">Refresh</button>
+<span class="muted" id="updated"></span>
+<div class="cards" id="cards"></div>
+<h2>Traces</h2>
+<table>
+  <thead><tr><th>Trace</th><th>Spans</th><th>Tokens</th><th>Latency ms</th><th>Errors</th></tr></thead>
+  <tbody id="traces"></tbody>
+</table>
+<script>
+async function load() {
+  const [stats, traces] = await Promise.all([
+    fetch('/api/stats').then(r => r.json()),
+    fetch('/api/traces').then(r => r.json())
+  ]);
+  const cards = [
+    ['Traces', stats.traces], ['Spans', stats.spans],
+    ['Tokens', stats.input_tokens + stats.output_tokens],
+    ['Est. cost', '$' + stats.est_cost_usd.toFixed(4)],
+    ['p50 latency', stats.latency_p50_ms + ' ms'],
+    ['p95 latency', stats.latency_p95_ms + ' ms'],
+    ['Error rate', (stats.error_rate * 100).toFixed(1) + '%']
+  ];
+  document.getElementById('cards').innerHTML = cards.map(([k, v]) =>
+    `<div class="card"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
+  document.getElementById('traces').innerHTML = traces.traces.map(t =>
+    `<tr><td>${t.trace_id}</td><td>${t.spans}</td><td>${t.tokens}</td>` +
+    `<td>${Math.round(t.latency_ms)}</td>` +
+    `<td class="${t.errors ? 'err' : ''}">${t.errors}</td></tr>`).join('')
+    || '<tr><td colspan="5" class="muted">No traces yet — POST spans to /api/events.</td></tr>';
+  document.getElementById('updated').textContent = 'updated ' + new Date().toLocaleTimeString();
+}
+load();
+setInterval(load, 10000);
+</script>
+</body>
+</html>

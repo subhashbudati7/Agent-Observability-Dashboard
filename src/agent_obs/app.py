@@ -1,12 +1,15 @@
-"""FastAPI service: ingest agent spans, query traces."""
+"""FastAPI service: ingest agent spans, query traces, stats, dashboard UI."""
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
-from .db import Store
+from .db import Store, percentile
+from .prices import estimate_cost
 
 
 class SpanIn(BaseModel):
@@ -42,6 +45,32 @@ def create_app(store: Store | None = None) -> FastAPI:
         if not spans:
             raise HTTPException(status_code=404, detail="trace not found")
         return {"trace_id": trace_id, "spans": spans}
+
+    @app.get("/api/stats")
+    def get_stats():
+        t = store.totals()
+        cost = sum(
+            estimate_cost(m["model"], m["input_tokens"], m["output_tokens"])
+            for m in t["by_model"]
+        )
+        lat = t["latencies_ms"]
+        spans = t["spans"]
+        return {
+            "spans": spans,
+            "traces": len(store.traces()),
+            "input_tokens": t["input_tokens"],
+            "output_tokens": t["output_tokens"],
+            "errors": t["errors"],
+            "error_rate": round(t["errors"] / spans, 4) if spans else 0.0,
+            "latency_p50_ms": round(percentile(lat, 50), 2),
+            "latency_p95_ms": round(percentile(lat, 95), 2),
+            "est_cost_usd": round(cost, 6),
+            "by_model": t["by_model"],
+        }
+
+    @app.get("/", include_in_schema=False)
+    def index():
+        return FileResponse(Path(__file__).parent / "static" / "index.html")
 
     return app
 
