@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+src/agent_obs/__init__.py
+src/agent_obs/app.py
+src/agent_obs/db.py
+src/agent_obs/prices.py
+src/agent_observability_dashboard.egg-info/PKG-INFO
+src/agent_observability_dashboard.egg-info/SOURCES.txt
+src/agent_observability_dashboard.egg-info/dependency_links.txt
+src/agent_observability_dashboard.egg-info/requires.txt
+src/agent_observability_dashboard.egg-info/top_level.txt
+tests/test_api.py

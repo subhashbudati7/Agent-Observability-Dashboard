@@ -1,3 +1,15 @@
+Metadata-Version: 2.4
+Name: agent-observability-dashboard
+Version: 0.1.0
+Summary: Self-hosted dashboard for AI agent observability: traces, token usage, cost, and latency.
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn>=0.29
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: httpx>=0.27; extra == "dev"
+
 # Agent Observability Dashboard
 
 Self-hosted observability for AI agents: ingest spans (LLM calls, tool calls), browse traces, and track token usage, cost, latency, and errors — all in one place, nothing leaves your machine.

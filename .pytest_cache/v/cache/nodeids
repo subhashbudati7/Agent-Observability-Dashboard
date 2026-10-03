@@ -1,0 +1,10 @@
+[
+  "tests/test_api.py::test_dashboard_index_serves_html",
+  "tests/test_api.py::test_ingest_returns_201",
+  "tests/test_api.py::test_ingest_validation_rejects_bad_payload",
+  "tests/test_api.py::test_percentile",
+  "tests/test_api.py::test_stats_aggregation",
+  "tests/test_api.py::test_stats_empty_store",
+  "tests/test_api.py::test_trace_404",
+  "tests/test_api.py::test_trace_listing_and_detail"
+]
