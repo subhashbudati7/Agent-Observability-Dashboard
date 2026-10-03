@@ -1,9 +1,9 @@
-"""FastAPI service: ingest agent spans."""
+"""FastAPI service: ingest agent spans, query traces."""
 from __future__ import annotations
 
 from typing import Literal
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from .db import Store
@@ -31,6 +31,17 @@ def create_app(store: Store | None = None) -> FastAPI:
     def ingest(span: SpanIn):
         sid = store.add_span(span.model_dump())
         return {"id": sid, "trace_id": span.trace_id, "span_id": span.span_id}
+
+    @app.get("/api/traces")
+    def list_traces():
+        return {"traces": store.traces()}
+
+    @app.get("/api/traces/{trace_id}")
+    def get_trace(trace_id: str):
+        spans = store.spans_for_trace(trace_id)
+        if not spans:
+            raise HTTPException(status_code=404, detail="trace not found")
+        return {"trace_id": trace_id, "spans": spans}
 
     return app
 
